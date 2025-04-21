@@ -5,4 +5,7 @@ export class TaskRepository {
   async create(data: Omit<Task, "id" | "createdAt" | "updatedAt" | "notes">) {
     return await prisma.task.create({ data });
   }
+  async findAll() {
+    return await prisma.task.findMany();
+  }
 }

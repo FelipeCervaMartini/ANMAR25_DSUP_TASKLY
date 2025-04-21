@@ -19,4 +19,8 @@ export class TaskService {
 
     return this.repository.create(data);
   }
+
+  async getAllTasks() {
+    return await this.repository.findAll();
+  }
 }
