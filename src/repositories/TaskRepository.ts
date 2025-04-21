@@ -7,16 +7,27 @@ export class TaskRepository {
     return await prisma.task.create({ data });
   }
   async findAll() {
-    return await prisma.task.findMany();
+    return prisma.task.findMany({
+      include: {
+        notes: true,
+      },
+    });
   }
+
   async getById(id: number) {
     return await prisma.task.findUnique({
       where: { id },
+      include: {
+        notes: true,
+      },
     });
   }
   async findByStatus(status: Status) {
     return prisma.task.findMany({
       where: { status },
+      include: {
+        notes: true,
+      },
     });
   }
 
