@@ -1,4 +1,5 @@
-import { PrismaClient, Task } from "@prisma/client";
+import { PrismaClient, Status, Task } from "@prisma/client";
+
 const prisma = new PrismaClient();
 
 export class TaskRepository {
@@ -13,6 +14,12 @@ export class TaskRepository {
       where: { id },
     });
   }
+  async findByStatus(status: Status) {
+    return prisma.task.findMany({
+      where: { status },
+    });
+  }
+
   async delete(id: number) {
     return await prisma.task.delete({
       where: { id },

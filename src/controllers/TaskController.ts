@@ -49,6 +49,22 @@ export class TaskController {
       res.status(500).json({ message: "Internal server error" });
     }
   }
+  async getByStatus(req: Request, res: Response) {
+    const status = req.params.status?.toUpperCase();
+
+    if (!["TODO", "IN_PROGRESS", "DONE"].includes(status)) {
+      return res.status(400).json({ error: "Invalid status" });
+    }
+
+    try {
+      const tasks = await this.service.getTasksByStatus(status);
+      return res.status(200).json(tasks);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  }
+
   async delete(req: Request, res: Response) {
     const id = Number(req.params.id);
 

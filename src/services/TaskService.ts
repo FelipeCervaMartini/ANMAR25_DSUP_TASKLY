@@ -1,6 +1,7 @@
 import { TaskRepository } from "../repositories/TaskRepository";
 import { createTaskSchema } from "../validators/task.schema";
 import { updateTaskSchema } from "../validators/task.schema";
+import { Status } from "@prisma/client";
 
 export class TaskService {
   private repository = new TaskRepository();
@@ -28,6 +29,13 @@ export class TaskService {
   async getTaskById(id: number) {
     return await this.repository.getById(id);
   }
+  async getTasksByStatus(status: string) {
+    if (!Object.values(Status).includes(status as Status)) {
+      throw new Error("Invalid status");
+    }
+    return this.repository.findByStatus(status as Status);
+  }
+
   async deleteTask(id: number) {
     return await this.repository.delete(id);
   }

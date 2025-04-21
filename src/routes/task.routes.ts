@@ -19,5 +19,8 @@ router.delete("/tasks/:id", (req: Request, res: Response) => {
 router.put("/tasks/:id", (req: Request, res: Response) => {
   controller.update(req, res);
 });
+router.get("/tasks/status/:status", (req: Request, res: Response) => {
+  controller.getByStatus(req, res);
+});
 
 export default router;
