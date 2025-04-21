@@ -23,4 +23,8 @@ export class TaskService {
   async getAllTasks() {
     return await this.repository.findAll();
   }
+
+  async getTaskById(id: number) {
+    return await this.repository.getById(id);
+  }
 }

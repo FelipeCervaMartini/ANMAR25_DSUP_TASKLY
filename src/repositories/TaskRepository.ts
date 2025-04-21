@@ -8,4 +8,9 @@ export class TaskRepository {
   async findAll() {
     return await prisma.task.findMany();
   }
+  async getById(id: number) {
+    return await prisma.task.findUnique({
+      where: { id },
+    });
+  }
 }

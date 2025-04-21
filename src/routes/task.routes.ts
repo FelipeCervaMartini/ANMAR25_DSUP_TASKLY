@@ -10,5 +10,8 @@ router.post("/tasks", (req: Request, res: Response) => {
 router.get("/tasks", (req: Request, res: Response) => {
   controller.getAll(req, res);
 });
+router.get("/tasks/:id", (req: Request, res: Response) => {
+  controller.getById(req, res);
+});
 
 export default router;
