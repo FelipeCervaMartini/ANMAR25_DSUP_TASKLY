@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { createTaskSchema } from "../validators/task.schema";
 import { TaskService } from "../services/TaskService";
 
 export class TaskController {
@@ -8,16 +7,14 @@ export class TaskController {
   }
 
   async create(req: Request, res: Response) {
-    const parse = createTaskSchema.safeParse(req.body);
-
-    if (!parse.success) {
-      return res.status(400).json({ error: parse.error.format() });
-    }
-
     try {
-      const task = await this.service.createTask(parse.data);
+      const task = await this.service.createTask(req.body);
       return res.status(201).json(task);
     } catch (error: any) {
+      if (error.type === "validation") {
+        return res.status(400).json({ error: error.details });
+      }
+
       console.error(error);
       res.status(500).json({ message: "Internal server error" });
     }
