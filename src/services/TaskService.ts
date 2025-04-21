@@ -27,4 +27,7 @@ export class TaskService {
   async getTaskById(id: number) {
     return await this.repository.getById(id);
   }
+  async deleteTask(id: number) {
+    return await this.repository.delete(id);
+  }
 }

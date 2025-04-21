@@ -49,4 +49,19 @@ export class TaskController {
       res.status(500).json({ message: "Internal server error" });
     }
   }
+  async delete(req: Request, res: Response) {
+    const id = Number(req.params.id);
+
+    if (isNaN(id)) {
+      return res.status(400).json({ error: "Invalid task ID" });
+    }
+
+    try {
+      await this.service.deleteTask(id);
+      return res.status(204).send();
+    } catch (error: any) {
+      console.error(error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  }
 }

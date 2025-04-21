@@ -13,5 +13,8 @@ router.get("/tasks", (req: Request, res: Response) => {
 router.get("/tasks/:id", (req: Request, res: Response) => {
   controller.getById(req, res);
 });
+router.delete("/tasks/:id", (req: Request, res: Response) => {
+  controller.delete(req, res);
+});
 
 export default router;
