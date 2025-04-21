@@ -64,4 +64,28 @@ export class TaskController {
       return res.status(500).json({ message: "Internal server error" });
     }
   }
+  async update(req: Request, res: Response) {
+    const id = Number(req.params.id);
+
+    if (isNaN(id)) {
+      return res.status(400).json({ error: "Invalid task ID" });
+    }
+
+    try {
+      const updated = await this.service.updateTask(id, req.body);
+
+      if (!updated) {
+        return res.status(404).json({ error: "Task not found" });
+      }
+
+      return res.status(200).json(updated);
+    } catch (error: any) {
+      if (error.type === "validation") {
+        return res.status(400).json({ error: error.details });
+      }
+
+      console.error(error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  }
 }

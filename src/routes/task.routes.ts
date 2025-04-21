@@ -16,5 +16,8 @@ router.get("/tasks/:id", (req: Request, res: Response) => {
 router.delete("/tasks/:id", (req: Request, res: Response) => {
   controller.delete(req, res);
 });
+router.put("/tasks/:id", (req: Request, res: Response) => {
+  controller.update(req, res);
+});
 
 export default router;
