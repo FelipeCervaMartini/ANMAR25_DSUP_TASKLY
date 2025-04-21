@@ -13,4 +13,8 @@ export class NoteService {
 
     return this.repository.create(taskId, parsed.data.content);
   }
+
+  async getNotesByTaskId(taskId: number) {
+    return this.repository.findByTaskId(taskId);
+  }
 }

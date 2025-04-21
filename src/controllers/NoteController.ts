@@ -22,4 +22,19 @@ export class NoteController {
       return res.status(500).json({ error: "Internal server error" });
     }
   }
+  async getAllByTaskId(req: Request, res: Response) {
+    const taskId = Number(req.params.taskId);
+
+    if (isNaN(taskId)) {
+      return res.status(400).json({ error: "Invalid task ID" });
+    }
+
+    try {
+      const notes = await this.service.getNotesByTaskId(taskId);
+      return res.status(200).json(notes);
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+  }
 }

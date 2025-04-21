@@ -11,4 +11,10 @@ export class NoteRepository {
       },
     });
   }
+
+  async findByTaskId(taskId: number) {
+    return prisma.note.findMany({
+      where: { taskId },
+    });
+  }
 }

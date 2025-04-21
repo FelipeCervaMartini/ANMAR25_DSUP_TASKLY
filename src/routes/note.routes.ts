@@ -8,4 +8,8 @@ router.post("/tasks/:taskId/notes", (req: Request, res: Response) => {
   controller.create(req, res);
 });
 
+router.get("/tasks/:taskId/notes", (req: Request, res: Response) => {
+  controller.getAllByTaskId(req, res);
+});
+
 export default router;
