@@ -8,10 +8,14 @@ export const createTaskSchema = z.object({
   category: z.string().min(1).max(50),
 });
 
-export const updateTaskSchema = z.object({
-  title: z.string().min(1).max(100).optional(),
-  description: z.string().min(1).max(500).optional(),
-  status: z.enum(["TODO", "IN_PROGRESS", "DONE"]).optional(),
-  priority: z.enum(["LOW", "MEDIUM", "HIGH"]).optional(),
-  category: z.string().min(1).max(50).optional(),
-});
+export const updateTaskSchema = z
+  .object({
+    title: z.string().min(1).max(100).optional(),
+    description: z.string().min(1).max(500).optional(),
+    status: z.enum(["TODO", "IN_PROGRESS", "DONE"]).optional(),
+    priority: z.enum(["LOW", "MEDIUM", "HIGH"]).optional(),
+    category: z.string().min(1).max(50).optional(),
+  })
+  .refine((data) => Object.keys(data).length > 0, {
+    message: "At least one field must be provided for update.",
+  });
