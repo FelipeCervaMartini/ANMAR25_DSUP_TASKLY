@@ -53,15 +53,11 @@ export class TaskService {
 
     return await this.repository.update(id, parse.data);
   }
-  async getTasksWithFilters(filters: {
-    title?: string;
-    status?: Status;
-    priority?: Priority;
-  }) {
-    return this.repository.findAllWithFilters(filters);
-  }
-  async getPaginatedTasks(page: number, limit: number) {
-    const skip = (page - 1) * limit;
-    return this.repository.findPaginated(skip, limit);
+  async getTasksWithFiltersAndPagination(
+    filters: { title?: string; status?: Status; priority?: Priority },
+    page: number,
+    limit: number
+  ) {
+    return this.repository.findWithFiltersAndPagination(filters, page, limit);
   }
 }

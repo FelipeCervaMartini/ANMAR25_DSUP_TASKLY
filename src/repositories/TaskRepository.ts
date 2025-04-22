@@ -42,11 +42,13 @@ export class TaskRepository {
       data,
     });
   }
-  async findAllWithFilters(filters: {
-    title?: string;
-    status?: Status;
-    priority?: Priority;
-  }) {
+  async findWithFiltersAndPagination(
+    filters: { title?: string; status?: Status; priority?: Priority },
+    page: number,
+    limit: number
+  ) {
+    const skip = (page - 1) * limit;
+
     return prisma.task.findMany({
       where: {
         ...(filters.title && {
@@ -54,26 +56,12 @@ export class TaskRepository {
             contains: filters.title,
           },
         }),
-        ...(filters.status && {
-          status: filters.status,
-        }),
-        ...(filters.priority && {
-          priority: filters.priority,
-        }),
+        ...(filters.status && { status: filters.status }),
+        ...(filters.priority && { priority: filters.priority }),
       },
       include: { notes: true },
-    });
-  }
-  async findPaginated(skip: number, take: number) {
-    return prisma.task.findMany({
-      skip,
-      take,
-      include: {
-        notes: true,
-      },
-      orderBy: {
-        priority: "desc",
-      },
+      take: limit,
+      skip: skip,
     });
   }
 }

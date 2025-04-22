@@ -22,20 +22,23 @@ export class TaskController {
     }
   }
   async getAll(req: Request, res: Response) {
-    const page = parseInt(req.query.page as string) || 1;
-    const limit = parseInt(req.query.limit as string) || 10;
-
-    const tasks = await this.service.getPaginatedTasks(page, limit);
-    return res.status(200).json(tasks);
-
     try {
+      const page = parseInt(req.query.page as string) || 1;
+      const limit = parseInt(req.query.limit as string) || 10;
+
       const { title, status, priority } = req.query;
 
-      const tasks = await this.service.getTasksWithFilters({
+      const filters = {
         title: title as string,
         status: status as Status,
         priority: priority as Priority,
-      });
+      };
+
+      const tasks = await this.service.getTasksWithFiltersAndPagination(
+        filters,
+        page,
+        limit
+      );
 
       return res.status(200).json(tasks);
     } catch (error) {
