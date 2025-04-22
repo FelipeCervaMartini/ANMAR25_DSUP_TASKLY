@@ -29,6 +29,12 @@ export class TaskController {
       const title = req.query.title
         ? (req.query.title as string).toLowerCase()
         : undefined;
+      const description = req.query.description
+        ? (req.query.description as string).toLowerCase()
+        : undefined;
+      const category = req.query.category
+        ? (req.query.category as string).toLowerCase()
+        : undefined;
       const status = req.query.status
         ? (req.query.status as string).toUpperCase()
         : undefined;
@@ -39,6 +45,8 @@ export class TaskController {
 
       const filters = {
         title: title as string,
+        description: description as string,
+        category: category as string,
         status: status as Status,
         priority: priority as Priority,
       };

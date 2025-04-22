@@ -55,7 +55,14 @@ export class TaskService {
     return await this.repository.update(id, parse.data);
   }
   async getTasksWithFiltersAndPagination(
-    filters: { title?: string; status?: Status; priority?: Priority },
+    filters: {
+      title?: string;
+      status?: Status;
+      priority?: Priority;
+      description?: string;
+      category?: string;
+    },
+
     page: number,
     limit: number,
     orderByPriority?: boolean

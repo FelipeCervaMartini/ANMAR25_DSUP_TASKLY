@@ -46,7 +46,13 @@ export class TaskRepository {
     });
   }
   async findWithFiltersAndPagination(
-    filters: { title?: string; status?: Status; priority?: Priority },
+    filters: {
+      title?: string;
+      description?: string;
+      category?: string;
+      status?: Status;
+      priority?: Priority;
+    },
     page: number,
     limit: number,
     orderByPriority?: boolean
@@ -58,6 +64,16 @@ export class TaskRepository {
         ...(filters.title && {
           title: {
             contains: filters.title,
+          },
+        }),
+        ...(filters.description && {
+          description: {
+            contains: filters.description,
+          },
+        }),
+        ...(filters.category && {
+          category: {
+            contains: filters.category,
           },
         }),
         ...(filters.status && { status: filters.status }),
