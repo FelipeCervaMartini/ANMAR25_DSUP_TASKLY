@@ -28,4 +28,9 @@ export class NoteRepository {
       data,
     });
   }
+  async delete(id: number) {
+    return prisma.note.delete({
+      where: { id },
+    });
+  }
 }

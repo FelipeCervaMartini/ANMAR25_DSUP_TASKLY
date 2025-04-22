@@ -31,4 +31,13 @@ export class NoteService {
     }
     return this.repository.update(id, parse.data);
   }
+
+  async deleteNote(id: number) {
+    const noteExists = await this.repository.findById(id);
+
+    if (!noteExists) {
+      throw { type: "not_found", message: "Note not found" };
+    }
+    await this.repository.delete(id);
+  }
 }

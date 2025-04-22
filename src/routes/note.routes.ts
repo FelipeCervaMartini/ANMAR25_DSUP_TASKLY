@@ -17,5 +17,7 @@ router.get("/notes/:id", (req: Request, res: Response) => {
 router.put("/notes/:id", (req: Request, res: Response) => {
   controller.update(req, res);
 });
-
+router.delete("/notes/:id", (req: Request, res: Response) => {
+  controller.delete(req, res);
+});
 export default router;

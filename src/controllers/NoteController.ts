@@ -75,4 +75,23 @@ export class NoteController {
       return res.status(500).json({ message: "Internal server error" });
     }
   }
+  async delete(req: Request, res: Response) {
+    const id = Number(req.params.id);
+
+    if (isNaN(id)) {
+      return res.status(400).json({ error: "Invalid note ID" });
+    }
+
+    try {
+      await this.service.deleteNote(id);
+      return res.status(204).send();
+    } catch (error: any) {
+      if (error.type === "not_found") {
+        return res.status(404).json({ error: error.message });
+      }
+
+      console.error(error);
+      return res.status(500).json({ message: "Internal server error" });
+    }
+  }
 }
