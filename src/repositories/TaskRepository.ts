@@ -1,4 +1,4 @@
-import { PrismaClient, Status, Task } from "@prisma/client";
+import { PrismaClient, Status, Priority, Task } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
@@ -40,6 +40,28 @@ export class TaskRepository {
     return await prisma.task.update({
       where: { id },
       data,
+    });
+  }
+  async findAllWithFilters(filters: {
+    title?: string;
+    status?: Status;
+    priority?: Priority;
+  }) {
+    return prisma.task.findMany({
+      where: {
+        ...(filters.title && {
+          title: {
+            contains: filters.title,
+          },
+        }),
+        ...(filters.status && {
+          status: filters.status,
+        }),
+        ...(filters.priority && {
+          priority: filters.priority,
+        }),
+      },
+      include: { notes: true },
     });
   }
 }

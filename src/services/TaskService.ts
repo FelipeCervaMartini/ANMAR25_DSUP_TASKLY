@@ -1,7 +1,7 @@
 import { TaskRepository } from "../repositories/TaskRepository";
 import { createTaskSchema } from "../validators/task.schema";
 import { updateTaskSchema } from "../validators/task.schema";
-import { Status } from "@prisma/client";
+import { Status, Priority } from "@prisma/client";
 
 export class TaskService {
   private repository = new TaskRepository();
@@ -52,5 +52,12 @@ export class TaskService {
     }
 
     return await this.repository.update(id, parse.data);
+  }
+  async getTasksWithFilters(filters: {
+    title?: string;
+    status?: Status;
+    priority?: Priority;
+  }) {
+    return this.repository.findAllWithFilters(filters);
   }
 }

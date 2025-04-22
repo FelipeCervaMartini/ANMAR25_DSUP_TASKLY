@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { TaskService } from "../services/TaskService";
+import { Status, Priority } from "@prisma/client";
 
 export class TaskController {
   constructor(private service = new TaskService()) {
@@ -22,7 +23,14 @@ export class TaskController {
   }
   async getAll(req: Request, res: Response) {
     try {
-      const tasks = await this.service.getAllTasks();
+      const { title, status, priority } = req.query;
+
+      const tasks = await this.service.getTasksWithFilters({
+        title: title as string,
+        status: status as Status,
+        priority: priority as Priority,
+      });
+
       return res.status(200).json(tasks);
     } catch (error) {
       console.error(error);
