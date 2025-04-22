@@ -116,7 +116,7 @@ export class TaskController {
 
     try {
       await this.service.deleteTask(id);
-      return res.status(204).send();
+      return res.status(200).json({ message: "Task deleted" });
     } catch (error: any) {
       console.error(error);
       return res.status(500).json({ message: "Internal server error" });

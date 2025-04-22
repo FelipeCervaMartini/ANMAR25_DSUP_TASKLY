@@ -90,7 +90,7 @@ export class NoteController {
 
     try {
       await this.service.deleteNote(id);
-      return res.status(204).send();
+      return res.status(200).json({ message: "Note deleted" });
     } catch (error: any) {
       if (error.type === "not_found") {
         return res.status(404).json({ error: error.message });
