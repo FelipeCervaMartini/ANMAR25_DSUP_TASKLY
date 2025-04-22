@@ -89,6 +89,11 @@ task-notes-api/
   - app.ts
 ```
 
+### 🛠️ Error Handling
+
+This API uses a global error handler as a fallback to catch any unhandled errors.
+The global error handler ensures the API responds with a clear error message if something unexpected happens, it acts as a safety net for errors not explicitly handled in controllers.
+
 ### Extra features
 
 - Task status system (`TODO`, `IN_PROGRESS`, `DONE`)
@@ -96,7 +101,6 @@ task-notes-api/
 - Task categorization by custom labels
 - Advanced filters and full-text search on tasks and notes
 - Pagination available on all list endpoints
-- Centralized error handling middleware
 - Data validation
 
 ## Test the API:
