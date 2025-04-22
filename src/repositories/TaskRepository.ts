@@ -64,4 +64,16 @@ export class TaskRepository {
       include: { notes: true },
     });
   }
+  async findPaginated(skip: number, take: number) {
+    return prisma.task.findMany({
+      skip,
+      take,
+      include: {
+        notes: true,
+      },
+      orderBy: {
+        priority: "desc",
+      },
+    });
+  }
 }

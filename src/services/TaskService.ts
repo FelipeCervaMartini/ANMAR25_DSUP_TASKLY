@@ -60,4 +60,8 @@ export class TaskService {
   }) {
     return this.repository.findAllWithFilters(filters);
   }
+  async getPaginatedTasks(page: number, limit: number) {
+    const skip = (page - 1) * limit;
+    return this.repository.findPaginated(skip, limit);
+  }
 }
