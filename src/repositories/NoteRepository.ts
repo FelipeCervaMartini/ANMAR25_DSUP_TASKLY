@@ -12,9 +12,28 @@ export class NoteRepository {
     });
   }
 
-  async findByTaskId(taskId: number) {
+  async findByTaskId(
+    taskId: number,
+    params: { page: number; limit: number; content?: string }
+  ) {
+    const { page, limit, content } = params;
+
+    const skip = (page - 1) * limit;
+
     return prisma.note.findMany({
-      where: { taskId },
+      where: {
+        taskId,
+        ...(content && {
+          content: {
+            contains: content,
+          },
+        }),
+      },
+      skip,
+      take: limit,
+      orderBy: {
+        createdAt: "desc",
+      },
     });
   }
   async findById(id: number) {

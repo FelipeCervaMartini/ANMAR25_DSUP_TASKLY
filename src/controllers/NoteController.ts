@@ -24,13 +24,19 @@ export class NoteController {
   }
   async getAllByTaskId(req: Request, res: Response) {
     const taskId = Number(req.params.taskId);
-
     if (isNaN(taskId)) {
       return res.status(400).json({ error: "Invalid task ID" });
     }
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 10;
+    const content = req.query.content as string | undefined;
 
     try {
-      const notes = await this.service.getNotesByTaskId(taskId);
+      const notes = await this.service.getNotesByTaskId(taskId, {
+        page,
+        limit,
+        content,
+      });
       return res.status(200).json(notes);
     } catch (error) {
       console.error(error);
