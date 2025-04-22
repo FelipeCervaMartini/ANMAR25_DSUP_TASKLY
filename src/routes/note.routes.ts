@@ -14,5 +14,8 @@ router.get("/tasks/:taskId/notes", (req: Request, res: Response) => {
 router.get("/notes/:id", (req: Request, res: Response) => {
   controller.getById(req, res);
 });
+router.put("/notes/:id", (req: Request, res: Response) => {
+  controller.update(req, res);
+});
 
 export default router;

@@ -1,5 +1,6 @@
 import { NoteRepository } from "../repositories/NoteRepository";
 import { createNoteSchema } from "../validators/note.schema";
+import { updateNoteSchema } from "../validators/note.schema";
 
 export class NoteService {
   private repository = new NoteRepository();
@@ -18,5 +19,16 @@ export class NoteService {
   }
   async getNoteById(id: number) {
     return this.repository.findById(id);
+  }
+  async updateNote(id: number, input: unknown) {
+    const parse = updateNoteSchema.safeParse(input);
+    if (!parse.success) {
+      throw { type: "validation", details: parse.error.format() };
+    }
+    const existingNote = await this.repository.findById(id);
+    if (!existingNote) {
+      throw { type: "not_found", message: "Note not found" };
+    }
+    return this.repository.update(id, parse.data);
   }
 }
