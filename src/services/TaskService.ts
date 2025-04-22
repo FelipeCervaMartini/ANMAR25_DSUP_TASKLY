@@ -27,18 +27,25 @@ export class TaskService {
   }
 
   async getTaskById(id: number) {
-    return await this.repository.getById(id);
+    const task = await this.repository.getById(id);
+    if (!task) throw { type: "not_found" };
+    return task;
   }
   async getTasksByStatus(status: string, page: number, limit: number) {
     if (!Object.values(Status).includes(status as Status)) {
-      throw new Error("Invalid status");
+      throw {
+        type: "validation",
+        details: { status: [{ message: "Invalid status value" }] },
+      };
     }
     const skip = (page - 1) * limit;
     return this.repository.findByStatus(status as Status, skip, limit);
   }
 
   async deleteTask(id: number) {
-    return await this.repository.delete(id);
+    const deleted = await this.repository.delete(id);
+    if (!deleted) throw { type: "not_found" };
+    return deleted;
   }
   async updateTask(id: number, input: unknown) {
     const parse = updateTaskSchema.safeParse(input);
