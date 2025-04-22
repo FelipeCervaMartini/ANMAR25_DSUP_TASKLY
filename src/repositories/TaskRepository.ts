@@ -22,11 +22,14 @@ export class TaskRepository {
       },
     });
   }
-  async findByStatus(status: Status) {
+  async findByStatus(status: Status, skip: number, take: number) {
     return prisma.task.findMany({
       where: { status },
-      include: {
-        notes: true,
+      include: { notes: true },
+      skip,
+      take,
+      orderBy: {
+        priority: "desc",
       },
     });
   }

@@ -29,11 +29,12 @@ export class TaskService {
   async getTaskById(id: number) {
     return await this.repository.getById(id);
   }
-  async getTasksByStatus(status: string) {
+  async getTasksByStatus(status: string, page: number, limit: number) {
     if (!Object.values(Status).includes(status as Status)) {
       throw new Error("Invalid status");
     }
-    return this.repository.findByStatus(status as Status);
+    const skip = (page - 1) * limit;
+    return this.repository.findByStatus(status as Status, skip, limit);
   }
 
   async deleteTask(id: number) {

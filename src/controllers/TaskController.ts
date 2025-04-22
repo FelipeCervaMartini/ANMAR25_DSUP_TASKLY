@@ -72,9 +72,15 @@ export class TaskController {
     if (!["TODO", "IN_PROGRESS", "DONE"].includes(status)) {
       return res.status(400).json({ error: "Invalid status" });
     }
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 10;
 
     try {
-      const tasks = await this.service.getTasksByStatus(status);
+      const tasks = await this.service.getTasksByStatus(
+        status as Status,
+        page,
+        limit
+      );
       return res.status(200).json(tasks);
     } catch (error) {
       console.error(error);
