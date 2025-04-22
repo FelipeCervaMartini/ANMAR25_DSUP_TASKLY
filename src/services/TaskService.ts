@@ -57,8 +57,14 @@ export class TaskService {
   async getTasksWithFiltersAndPagination(
     filters: { title?: string; status?: Status; priority?: Priority },
     page: number,
-    limit: number
+    limit: number,
+    orderByPriority?: boolean
   ) {
-    return this.repository.findWithFiltersAndPagination(filters, page, limit);
+    return this.repository.findWithFiltersAndPagination(
+      filters,
+      page,
+      limit,
+      orderByPriority
+    );
   }
 }

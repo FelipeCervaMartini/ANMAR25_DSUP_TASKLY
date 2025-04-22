@@ -48,7 +48,8 @@ export class TaskRepository {
   async findWithFiltersAndPagination(
     filters: { title?: string; status?: Status; priority?: Priority },
     page: number,
-    limit: number
+    limit: number,
+    orderByPriority?: boolean
   ) {
     const skip = (page - 1) * limit;
 
@@ -65,6 +66,7 @@ export class TaskRepository {
       include: { notes: true },
       take: limit,
       skip: skip,
+      orderBy: orderByPriority ? { priority: "desc" } : { id: "asc" },
     });
   }
 }

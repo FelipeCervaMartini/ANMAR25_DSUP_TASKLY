@@ -26,18 +26,29 @@ export class TaskController {
       const page = parseInt(req.query.page as string) || 1;
       const limit = parseInt(req.query.limit as string) || 10;
 
-      const { title, status, priority } = req.query;
+      const title = req.query.title
+        ? (req.query.title as string).toLowerCase()
+        : undefined;
+      const status = req.query.status
+        ? (req.query.status as string).toUpperCase()
+        : undefined;
+      const priority = req.query.priority
+        ? (req.query.priority as string).toUpperCase()
+        : undefined;
+      const orderBy = req.query.orderBy;
 
       const filters = {
         title: title as string,
         status: status as Status,
         priority: priority as Priority,
       };
+      const orderByPriority = orderBy === "priority";
 
       const tasks = await this.service.getTasksWithFiltersAndPagination(
         filters,
         page,
-        limit
+        limit,
+        orderByPriority
       );
 
       return res.status(200).json(tasks);
