@@ -1,4 +1,4 @@
-# Task Notes API
+# TASKLY API
 
 A RESTful API for managing tasks and notes. Built with TypeScript, Express, Prisma ORM, and MySQL.
 
@@ -12,6 +12,13 @@ A RESTful API for managing tasks and notes. Built with TypeScript, Express, Pris
 - TypeScript
 - CORS
 - Docker for running the database
+
+## Pre-requisites
+
+Before running this project, make sure you have the following tools installed on your machine:
+
+- [Node.js] (https://nodejs.org/)
+- [Docker] (https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/) for running the Database container
 
 ## Installation
 
