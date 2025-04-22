@@ -37,4 +37,24 @@ export class NoteController {
       return res.status(500).json({ error: "Internal server error" });
     }
   }
+  async getById(req: Request, res: Response) {
+    const id = Number(req.params.id);
+
+    if (isNaN(id)) {
+      return res.status(400).json({ error: "Invalid note ID" });
+    }
+
+    try {
+      const note = await this.service.getNoteById(id);
+
+      if (!note) {
+        return res.status(404).json({ error: "Note not found" });
+      }
+
+      return res.status(200).json(note);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  }
 }

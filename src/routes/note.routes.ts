@@ -11,5 +11,8 @@ router.post("/tasks/:taskId/notes", (req: Request, res: Response) => {
 router.get("/tasks/:taskId/notes", (req: Request, res: Response) => {
   controller.getAllByTaskId(req, res);
 });
+router.get("/notes/:id", (req: Request, res: Response) => {
+  controller.getById(req, res);
+});
 
 export default router;

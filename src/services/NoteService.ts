@@ -10,11 +10,13 @@ export class NoteService {
     if (!parsed.success) {
       throw { type: "validation", details: parsed.error.format() };
     }
-
     return this.repository.create(taskId, parsed.data.content);
   }
 
   async getNotesByTaskId(taskId: number) {
     return this.repository.findByTaskId(taskId);
+  }
+  async getNoteById(id: number) {
+    return this.repository.findById(id);
   }
 }
